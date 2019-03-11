@@ -9,6 +9,9 @@ public interface Solver {
 	 * @param in 테스트 케이스 입력을 받이들이는 InputStream
 	 * @param out 결과 값을 출력할 PrintStream 
 	 */	
-	public void solve(InputStream in, PrintStream out);
-
+	public void solve(InputStream in, PrintStream out) ;
+	
+		
+	
+	
 }
