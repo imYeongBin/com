@@ -16,8 +16,9 @@ public class RotatedRect implements Solver {
 	 */
 	
 	public void solve(InputStream in, PrintStream out) {
-		//
-		// ....
 		//		
+		// ....	
+		//		
+		
 	}			
 }
