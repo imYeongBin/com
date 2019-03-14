@@ -68,30 +68,36 @@ public class TestStock2 {
 		
 		int end_idx = size_array;		
 		int start_idx = 0;
-		
+		int count=0;
 		int max=0;
 		int max_idx=0;
 
 			//구간 시작값이 배열의 마지막값이 되면 종료되는 루프
 		while(check_last(start_idx,values)) {
+			System.out.println("start_idx : "+start_idx);
 			
-			max = chk_max(values,start_idx,end_idx);
-			max_idx = chk_idx(values,start_idx,end_idx);
+			max = chk_max(values,start_idx,end_idx);//			
+			System.out.println("max : "+max);
+			
+			max_idx = chk_idx(values,start_idx,end_idx);			
+			System.out.println("max_idx : "+max_idx);
+			
 				if(start_idx!=max_idx+1) {
 					for(int d = start_idx ;d<max_idx;d++) {
 						pur += values[d];
 						bb++;
 						
-					}	
+					}
+					System.out.println("첫번째 누적 pur"+pur+", bb : "+bb);
 					//구간합 = 구간내 구매한 주식 수 * 구간내 최고가
-					tot += bb*values[max];	
+					tot += bb*values[max_idx];	
+					System.out.println("tot : "+tot);
 					bb = 0;				
 					start_idx = max_idx+1;		
 				}else {
-					System.out.println("아무고토 하지 안는다");
+					System.out.println("아무것도 하지 않는다.");
 					start_idx++;
-				}
-						
+				}			
 				
 	
 			
