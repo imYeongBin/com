@@ -24,7 +24,7 @@ public class Stock implements Solver {
 	 */
 
 	public void solve(InputStream in, PrintStream out) {
-		String BF = "D:\\Work\\miri-exam\\sample\\";
+		String BF = "E:\\Work\\miri-exam\\sample\\";
 		String fileName = "주식투자-input02.txt";
 
 		byte[] b = new byte[4096];
