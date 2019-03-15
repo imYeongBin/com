@@ -15,7 +15,6 @@ public class Stock implements Solver {
 	public static void main(String[] args) {
 		new Stock().solve(System.in, System.out);
 	}
-
 	/*
 	 * 문제 풀이 메인 메소드
 	 * 
@@ -25,7 +24,7 @@ public class Stock implements Solver {
 	 */
 
 	public void solve(InputStream in, PrintStream out) {
-		String filePath = "D:\\Work\\miri-exam\\sample\\";
+		String BF = "D:\\Work\\miri-exam\\sample\\";
 		String fileName = "주식투자-input02.txt";
 
 		byte[] b = new byte[4096];
@@ -34,7 +33,7 @@ public class Stock implements Solver {
 		in = null;
 
 		try {
-			in = new FileInputStream(filePath + fileName);
+			in = new FileInputStream(BF + fileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
