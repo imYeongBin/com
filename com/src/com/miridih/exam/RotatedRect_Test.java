@@ -18,7 +18,7 @@ public class RotatedRect_Test implements Solver {
 
 	public void solve(InputStream in, PrintStream out) {
 
-		String BF = "E:\\Work\\miri-exam\\sample\\";
+		String BF = "D:\\Work\\miri-exam\\sample\\";
 		String fileName = "회전사각형-input.txt";
 
 		byte[] b = new byte[4096];
@@ -112,7 +112,7 @@ public class RotatedRect_Test implements Solver {
 		//System.out.println(answer);
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream("E:\\Work\\miri-exam\\sample\\회전사각형-output.txt");
+			os = new FileOutputStream("D:\\Work\\miri-exam\\sample\\회전사각형-output.txt");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
