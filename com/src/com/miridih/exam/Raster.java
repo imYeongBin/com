@@ -27,11 +27,9 @@ public class Raster implements Solver {
 
 	public void solve(InputStream in, PrintStream out) {
 
-		// String BF = "E:\\Work\\miri-exam\\sample\\";
-		// String fileName = "래스터그래픽-input00.txt";
-
-		String BF = "E:\\Work\\miri-exam\\sample\\";
-		String fileName = "래스터그래픽-input00.txt";
+		String BF = "D:/Work/miri-exam/sample/";
+		String inputfileName = "래스터그래픽-input00.txt";
+		String outputfileName = "래스터그래픽output00.txt";
 
 		byte[] b = new byte[4096];
 		InputStreamReader reader = null;
@@ -39,7 +37,7 @@ public class Raster implements Solver {
 		in = null;
 
 		try {
-			in = new FileInputStream(BF + fileName);
+			in = new FileInputStream(BF + inputfileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,7 +156,7 @@ public class Raster implements Solver {
 
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream("E:\\Work\\miri-exam\\sample\\래스터그래픽output00.txt");
+			os = new FileOutputStream(BF + outputfileName);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

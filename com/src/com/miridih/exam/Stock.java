@@ -24,16 +24,16 @@ public class Stock implements Solver {
 	 */
 
 	public void solve(InputStream in, PrintStream out) {
-		String BF = "D:\\Work\\miri-exam\\sample\\";
-		String fileName = "주식투자-input02.txt";
-
+		String BF = "D:/Work/miri-exam/sample/";
+		String inputfileName = "주식투자-input02.txt";
+		String outputfileName = "주식투자-output02.txt";
 		byte[] b = new byte[4096];
 		InputStreamReader reader = null;
 		StringBuffer buf = new StringBuffer();
 		in = null;
 
 		try {
-			in = new FileInputStream(BF + fileName);
+			in = new FileInputStream(BF + inputfileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +117,7 @@ public class Stock implements Solver {
 		// 출력 부분
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream("D:\\Work\\miri-exam\\sample\\주식투자-output02.txt");
+			os = new FileOutputStream(BF + outputfileName);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

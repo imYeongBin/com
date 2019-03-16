@@ -25,8 +25,9 @@ public class RotatedRect implements Solver {
 	*/
 	public void solve(InputStream in, PrintStream out) {
 
-		String BF = "E:\\Work\\miri-exam\\sample\\";
-		String fileName = "회전사각형-input.txt";
+		String BF = "D:/Work/miri-exam/sample/";
+		String inputfileName = "회전사각형-input.txt";
+		String outputfileName = "회전사각형-output.txt";
 
 		byte[] b = new byte[4096];
 		InputStreamReader reader = null;
@@ -34,7 +35,7 @@ public class RotatedRect implements Solver {
 		in = null;
 
 		try {
-			in = new FileInputStream(BF + fileName);
+			in = new FileInputStream(BF + inputfileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,7 +120,7 @@ public class RotatedRect implements Solver {
 		//System.out.println(answer);
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream("E:\\Work\\miri-exam\\sample\\회전사각형-output.txt");
+			os = new FileOutputStream(BF + outputfileName);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
