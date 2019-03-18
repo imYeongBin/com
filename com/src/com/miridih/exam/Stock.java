@@ -26,19 +26,20 @@ public class Stock implements Solver {
 	public void solve(InputStream in, PrintStream out) {
 		String BF = "D:/Work/miri-exam/sample/";
 		String inputfileName = "주식투자-input02.txt";
+		//String BF = "WebContent/sourceFiles/";
+		//String inputfileName = "test_stock.txt";
 		String outputfileName = "주식투자-output02.txt";
 		byte[] b = new byte[4096];
 		InputStreamReader reader = null;
 		StringBuffer buf = new StringBuffer();
 		in = null;
-
 		try {
 			in = new FileInputStream(BF + inputfileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			reader = new InputStreamReader(in, "utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -55,9 +56,9 @@ public class Stock implements Solver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String str = buf.toString();
-		String[] arr = str.split("\n");
+		String[] arr = str.split("\r\n");
 
 		try {
 			reader.close();
@@ -69,18 +70,16 @@ public class Stock implements Solver {
 		String output_str = "";
 		int array_number = 2;
 		for (array_number = 2; array_number < arr.length; array_number += 2) {
-
 			String prices = arr[array_number];
 			String[] price = prices.split(" ");
 
 			int size_array = price.length;
 			int[] values = new int[price.length];
-
 			values = change(price);
 
-			int tot = 0;
+			int tot = 0;// 판매이익
 			int bb = 0;
-			
+
 			//////////////////////////////////////////////////////////////////////////////
 			// 주식가격이 max값인 전날까지 주식을 전부 산다.
 			// max값에 주식을 전부 판다.
@@ -89,31 +88,21 @@ public class Stock implements Solver {
 			// max값인 날이 바로 다음날이면(start_idx=max_idx+1)이면 그날은 아무것도 하지 않는다.
 			// 그 다음날부터 다시 max를 찾는다. 배열 내 마지막값이 max값으로 될 때 까지 반복
 			//////////////////////////////////////////////////////////////////////////////
-			
-			int pur = 0;
-
+			// 초기화부분
+			int pur = 0;// 구매비용
 			int end_idx = size_array;
 			int start_idx = 0;
 			int max = 0;
-			int max_idx = 0;
 
 			// 구간 시작값이 배열의 마지막값이 되면 종료되는 루프
 			while (check_last(start_idx, values)) {
-				max = chk_max(values, start_idx, end_idx);
-				max_idx = chk_idx(values, start_idx, end_idx);
-				
-				for (int d = start_idx; d < max_idx; d++) {
-					pur += values[d];
-					bb++;
-				}
-				tot += bb * max;
-				bb = 0;
-				start_idx = max_idx + 1;				
-			}// while 문 종료
-			output_str += (tot - pur) + "\r\n";
+				tot += purchase(values,start_idx,end_idx,max,pur,bb);//구간배열, 시작, 종료, 총구매비용, 보유주식수
+				start_idx = chk_idx(values,start_idx,end_idx)+1;//재귀함수를 이용하여, 구간내 최고값의 index를 다음 구간의 시작값으로 할당.				
+			} // while 문 종료
+			
+			output_str += tot+ "\r\n";
+			
 		} // 최외각 for문 닫는 괄호
-		System.out.println(output_str);
-
 		// 출력 부분
 		OutputStream os = null;
 		try {
@@ -134,9 +123,19 @@ public class Stock implements Solver {
 
 	}
 
-	// 개별 설정 함수
+	private static int purchase(int[] values, int start_idx, int end_idx, int max, int pur, int bb) {
+		int tot = 0;
+		max = chk_max(values, start_idx, end_idx);
+		for (int a = start_idx; a < chk_idx(values, start_idx, end_idx); a++) {
+			pur += values[a];
+			bb++;
+		}
+		tot = bb * max - pur;
+		bb = 0;
+		return tot;
+	}
 
-	// index가 배열arr의 마지막index인지 확인하는 함수
+//index가 배열arr의 마지막index인지 확인하는 함수
 	private static boolean check_last(int index, int[] arr) {
 		if (index == arr.length) {
 			return false;
@@ -195,5 +194,4 @@ public class Stock implements Solver {
 			return idx;
 		}
 	}
-
 }
