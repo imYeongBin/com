@@ -7,40 +7,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 
-public class Raster implements Solver {
-
-	public static class point {
-		double x;
-		double y;
-		public point() {};
-		public point(double x, double y) {
-			// TODO Auto-generated constructor stub
-			this.x = x;
-			this.y = y;
-		}
-
-	}
-
-	public static class line {
-		double grad;
-		point point;
-		public line() {};
-		public line(com.miridih.exam.Raster.point point, double grad) {
-			// TODO Auto-generated constructor stub
-			this.point = point;
-			this.grad = grad;
-		}
-		
-
-
-	}
+public class Raster3 implements Solver {
 
 	public static void main(String[] args) {
-		new Raster().solve(System.in, System.out);
+		new Raster3().solve(System.in, System.out);
 	}
 
 	/*
@@ -88,7 +62,7 @@ public class Raster implements Solver {
 
 		String str = buf.toString();
 		String[] arr = str.split("\n");// 20 16\n9 6 5\n16 14 8 14
-
+		
 		try {
 			reader.close();
 		} catch (IOException e) {
@@ -97,28 +71,22 @@ public class Raster implements Solver {
 		}
 //////////////////////////////end of initial settings /////////////////////////////////////
 		String answer = "";
-		// 변수 초기화
+		//변수 초기화
 		int w = 0;
 		int h = 0;
 		int x_circle = 0;
 		int y_circle = 0;
 		int r = 0;
-		ArrayList<point> pList = new ArrayList<point>();
-		ArrayList<line> lList = new ArrayList<line>();
-		
-		// 두 점 P1 - P3 간의 거리 ==정사각형의 내부 대각선 길이
-		double distance = 0;
-		// 정사각형 한 변의 길이
-		double ll = 0;
-		// 대각선 위치에 놓인 두점으로부터 기울어진 각도 추출
-		double angle = 0;
-		
+		int x1 = 0;
+		int y1 = 0;
+		int x3 = 0;
+		int y3 = 0;
 		
 		int array_number = 0;
 		for (array_number = 0; array_number < arr.length; array_number++) {// 변수 선언을 위한 for문
 
 			String values_str = arr[array_number];
-			String[] value_str = values_str.split(" ");
+			String[] value_str = values_str.split(" "); 
 			if (array_number == 0) {
 				w = Integer.parseInt(value_str[0]);
 				h = Integer.parseInt(value_str[1]);
@@ -129,21 +97,10 @@ public class Raster implements Solver {
 				r = Integer.parseInt(value_str[2]);
 			}
 			if (array_number == 2) {
-				point p1 = new point(Double.parseDouble(value_str[0]),Double.parseDouble(value_str[1]));
-				point p3 = new point(Double.parseDouble(value_str[2]),Double.parseDouble(value_str[3]));
-				
-				distance = PtoPDistance(p1, p3);// 두 점 P1 - P3 간의 거리 ==정사각형의 내부 대각선 길이
-				angle = calcAngle(p1, p3);// 대각선 위치에 놓인 두점으로부터 기울어진 각도 추출
-				ll = distance / Math.sqrt(2);// 정사각형 한 변의 길이
-				
-				point p2 = new point(p1.x + ll * Math.cos(Math.toRadians(angle)),
-						p1.y - ll * Math.sin(Math.toRadians(angle)));
-				point p4 = new point(p3.x - ll * Math.sin(Math.toRadians(angle)),
-						p3.y + ll * Math.cos(Math.toRadians(angle)));
-				pList.add(p1);
-				pList.add(p2);
-				pList.add(p3);
-				pList.add(p4);
+				x1 = Integer.parseInt(value_str[0]);
+				y1 = Integer.parseInt(value_str[1]);
+				x3 = Integer.parseInt(value_str[2]);
+				y3 = Integer.parseInt(value_str[3]);
 			}
 
 		} // 변수 선언을 위한 for문 닫는 괄호
@@ -158,29 +115,42 @@ public class Raster implements Solver {
 //		P1-P2, P2-P3, P3-P4, P4-P1 의 그래프를 만든다.
 //		y값이 P1-P2, P2-P3 보다 작고 P3-P4, P4-P1보다 큰 좌표에 #을 찍고 그 외에는 .을 찍는다
 //////////////////////////////////////////////////////////////////////////////
-
-		//line 객체 설정 && ArrayList에 누적저장 처리
-		lList.add(   new line(  pList.get(0), gradient( pList.get(0), pList.get(1) )  )   );
-		lList.add(   new line(  pList.get(1), gradient( pList.get(1), pList.get(2) )  )   );
-		lList.add(   new line(  pList.get(2), gradient( pList.get(2), pList.get(3) )  )   );
-		lList.add(   new line(  pList.get(3), gradient( pList.get(3), pList.get(0) )  )   );
+		//두 점 P1 - P3 간의 거리 ==정사각형의 내부 대각선 길이
+		double distance2 = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+		// 정사각형 한 변의 길이
+		double ll = distance2 / Math.sqrt(2);
+		//임의의 정사각형이 기울어진 각도
+		double angle = 45 - Math.toDegrees(Math.atan2((y3 - y1), (x3 - x1)));
+		//P2 P4 의 좌표
+		double x2 = x1 + ll * Math.cos(Math.toRadians(angle));
+		double y2 = y1 - ll * Math.sin(Math.toRadians(angle));
+		double x4 = x3 - ll * Math.sin(Math.toRadians(angle));
+		double y4 = y3 + ll * Math.cos(Math.toRadians(angle));
+		//각각 두점 사이의 기울기
+		double grad1 = gradient(x1, y1, x2, y2);
+		double grad2 = gradient(x2, y2, x3, y3);
+		double grad3 = gradient(x3, y3, x4, y4);
+		double grad4 = gradient(x4, y4, x1, y1);
+		
 		for (int yy = 0; yy < h; yy++) {
 			for (int xx = 0; xx < w; xx++) {
-				if (radius(x_circle, y_circle, xx, yy) <= r) {// 원 그리기
-					answer += "#";
+				if (distance(x_circle, y_circle, xx, yy) <= r) {//원 그리기
+					answer+="#";
 					System.out.print("#");
-				} else if (yy <= graph(xx, lList.get(0)) && yy <= graph(xx, lList.get(1)) 
-						&& yy >= graph(xx, lList.get(2)) && yy >= graph(xx, lList.get(3))) {
-					answer += "#";
+				} else if (yy <= graph(grad1, xx, x1, y1) && yy <= graph(grad2, xx, x2, y2) 
+						&& yy >= graph(grad3, xx, x3, y3) && yy >= graph(grad4, xx, x4, y4)) {
+					answer+="#";
 					System.out.print("#");
 				} else {
-					answer += ". ";
+					answer+=". ";
 					System.out.print(".");
 				}
+
 			}
-			answer += "\r\n";
+			answer+="\r\n";
 			System.out.println("");
 		}
+
 
 		OutputStream os = null;
 		try {
@@ -200,27 +170,22 @@ public class Raster implements Solver {
 
 	}
 
-	private static double PtoPDistance(point p1, point p2) {
-		return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+	private static double gradient(double x1, double y1, double x2, double y2) {
+
+		return (y1 - y2) / (x1 - x2);
 	}
 
-	private static double gradient(point p1, point p2) {
-		return (p1.y - p2.y) / (p1.x - p2.x);
-	}
-
-	private static double calcAngle(point p1, point p2) {
-		return 45 - Math.toDegrees(Math.atan2((p2.y - p1.y), (p2.x - p1.x)));
-	}
-
-	private static double graph(int x, line line) {
+	private static double graph(double gradient, double x, double x1, double y1) {
 		double res_y = 0;
-		res_y = (line.grad * x) + line.point.y - (line.grad * line.point.x);
+		res_y = (gradient * x) + y1 - (gradient * x1);
 		return res_y;
 	}
 
-	private static double radius(int x, int y, int q, int qq) {
+	private static double distance(int x, int y, int q, int qq) {
 		double distance = Math.sqrt(Math.pow((x - q), 2) + Math.pow((y - qq), 2));
+
 		return distance;
 	}
+
 
 }

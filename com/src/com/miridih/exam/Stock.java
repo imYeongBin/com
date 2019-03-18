@@ -26,8 +26,6 @@ public class Stock implements Solver {
 	public void solve(InputStream in, PrintStream out) {
 		String BF = "D:/Work/miri-exam/sample/";
 		String inputfileName = "주식투자-input02.txt";
-		//String BF = "WebContent/sourceFiles/";
-		//String inputfileName = "test_stock.txt";
 		String outputfileName = "주식투자-output02.txt";
 		byte[] b = new byte[4096];
 		InputStreamReader reader = null;
