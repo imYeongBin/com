@@ -1,5 +1,5 @@
-# test
 
+<!--
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -53,3 +53,4 @@
 		<auth-method>BASIC</auth-method>
 	</login-config>
 </web-app>
+ -->
